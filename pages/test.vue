@@ -5,15 +5,18 @@
       <v-card-actions>
           <v-btn @click="test">test</v-btn>
           <v-btn @click="hello">hello</v-btn>
+          <v-btn @click="moment">moment</v-btn>
       </v-card-actions>
   </v-card>
 </template>
 
 <script>
+import moment from 'moment'
+
 export default {
     data() {
         return{
-            txt: ''
+            txt: 'www'
         }
     },
     methods:{
@@ -24,6 +27,9 @@ export default {
         async hello() {
             const r = await this.$axios.get('/api/hello')
             this.txt = r.data
+        },
+        moment() {
+            this.txt = moment().toDate().toLocaleTimeString()
         }
     }
 }
