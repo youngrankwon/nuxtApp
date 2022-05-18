@@ -25,6 +25,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    '@/plugins/moment'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -40,6 +41,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    'vuetify-dialog/nuxt'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

@@ -6,12 +6,13 @@
           <v-btn @click="test">test</v-btn>
           <v-btn @click="hello">hello</v-btn>
           <v-btn @click="moment">moment</v-btn>
+          <v-btn @click="dialogOpen">dialog</v-btn>
       </v-card-actions>
   </v-card>
 </template>
 
 <script>
-import moment from 'moment'
+// import moment from 'moment'
 
 export default {
     data() {
@@ -29,7 +30,15 @@ export default {
             this.txt = r.data
         },
         moment() {
-            this.txt = moment().toDate().toLocaleTimeString()
+            // this.txt = moment().toDate().toLocaleTimeString()
+            this.txt = this.$moment().toDate().toLocaleTimeString()
+        },
+        async dialogOpen() {
+            const r = await this.$dialog.confirm({
+                title: 'hello?',
+                text: 'okok?'
+            })
+            this.txt = r ? 'YES' : 'NO'
         }
     }
 }
