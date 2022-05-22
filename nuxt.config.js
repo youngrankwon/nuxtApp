@@ -25,7 +25,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/moment'
+    '@/plugins/moment',
+    '@/plugins/firebase'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -73,5 +74,5 @@ export default {
   build: {
   },
 
-  serverMiddleware: ['~/api/index.js']
+  serverMiddleware: [{ path: '/api', handler: '~/api/index.js' }]
 }
