@@ -6,6 +6,7 @@
         </v-card-text>
         <v-card-actions>
             <v-btn @click="test">test</v-btn>
+            <v-btn @click="funcTest">funcTest</v-btn>
             <v-btn @click="hello">hello</v-btn>
             <v-btn @click="moment">moment</v-btn>
             <v-btn @click="dialogOpen">dialog</v-btn>
@@ -26,13 +27,21 @@ export default {
         }
     },
     mounted() {
-        this.db = this.$firebase.firestore();
+        this.db = this.$firebase
     },
     methods: {
         async test() {
             const r = await this.$axios.get('/api')
             this.txt = r.data
         },
+        async funcTest() {
+            const { data } = await this.$axios.get(
+                'http://localhost:5000/ran-vue-nuxt-test/us-central1/abc'
+            )
+            console.log(data)
+            this.txt = data
+        },
+        
         async hello() {
             const r = await this.$axios.get('/api/hello')
             this.txt = r.data
@@ -48,27 +57,29 @@ export default {
             })
             this.txt = r ? 'YES' : 'NO'
         },
-        write() {
-            this.db.collection("users").add({
-                first: "Ada",
-                last: "Lovelace",
-                born: 1815
-            })
-                .then((docRef) => {
-                    console.log("Document written with ID: ", docRef.id);
-                    this.txt = docRef.id
+        async write() {
+            try {
+                const r = await this.db.collection("users").add({
+                    first: "Ada",
+                    last: "Lovelace",
+                    born: 1815
                 })
-                .catch((error) => {
-                    console.error("Error adding document: ", error);
-                });
+                this.txt = `Document written with ID: => ${r.id}`
+            } catch (error) {
+                await this.$dialog.notify.error(error.message)
+            }
         },
-        read() {
-            this.db.collection("users").get().then((querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    this.txt = JSON.stringify(doc.data())
-                    console.log(`${doc.id} => ${doc.data()}`);
-                });
-            });
+        async read() {
+            try {
+                const rs = await this.db.collection("users").get()
+                const ss = []
+                rs.forEach(r => {
+                    ss.push(`${r.id} => ${JSON.stringify(r.data())}`)
+                })
+                this.txt = ss.join('\n')
+            } catch (e) {
+                await this.$dialog.notify.error(e.message)
+            }
         }
     }
 }

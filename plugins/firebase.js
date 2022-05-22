@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import firebase from "firebase/app";
-import "firebase/firestore";
-import firebaseConfig from './firebaseConfig';
+import firebase from "firebase/app"
+import "firebase/firestore"
+import firebaseConfig from './firebaseConfig'
 
 
 // TODO: Replace the following with your app's Firebase project configuration
@@ -9,11 +9,11 @@ import firebaseConfig from './firebaseConfig';
 
 // Initialize Firebase
 if(!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(firebaseConfig)
 } else {
     firebase.app()
 }
 
 
 // Initialize Cloud Firestore and get a reference to the service
-Vue.prototype.$firebase = firebase
+Vue.prototype.$firebase = firebase.firestore()
